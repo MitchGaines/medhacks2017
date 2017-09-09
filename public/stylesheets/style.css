@@ -6,3 +6,41 @@ body {
 a {
   color: #00B7FF;
 }
+
+
+body, html, h2 { 
+  margin:0; 
+  padding:0; 
+  height:100%; 
+  max-width:100%; 
+  background: rgba(219,216,252, 0.96) url("/images/person1-outline.png") no-repeat center;
+  background-size:contain;
+} 
+
+body { 
+  font-family:sans-serif; 
+}
+
+body * { 
+  font-weight:200;
+}
+
+#heatmapContainerWrapper { 
+  width:100%; 
+  height:100%; 
+  position:absolute; 
+  background:rgba(0,0,0,.1); 
+}
+
+#heatmapContainer { 
+  width:100%; 
+  height:100%;
+}
+
+#min { 
+  float:left; 
+}
+
+#max { 
+  float:right; 
+}
