@@ -13,7 +13,7 @@ body, html, h2 {
   padding:0; 
   height:100%; 
   max-width:100%; 
-  background: rgba(219,216,252, 0.96) url("/images/person1-outline.png") no-repeat center;
+  background: rgba(219,216,220, 0.96) url("/images/person1-outline.png") no-repeat center;
   background-size:contain;
 } 
 

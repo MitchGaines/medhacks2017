@@ -40,7 +40,7 @@ io.on('connection', function(client) {
           } else buffer += data;
       });
     }, 50);
-    */
+    */5
   });
 
 });
