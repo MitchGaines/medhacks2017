@@ -1,46 +1,57 @@
+// app.js
 var express = require('express');
-var path = require('path');
-var favicon = require('serve-favicon');
-var logger = require('morgan');
-var cookieParser = require('cookie-parser');
-var bodyParser = require('body-parser');
-
-var index = require('./routes/index');
-var scripts = express.static(__dirname + '/node_modules/heatmap.js/build/heatmap.js');
-
 var app = express();
+var server = require('http').createServer(app);
+var io = require('socket.io')(server);
+var SerialPort = require("serialport");
+// spPortName may need to be configured until we resolve automatic detection!
+//var spPortName = "/dev/cu.usbmodem1421";
+var port = 3000;
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
+app.use(express.static('public'))
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
-app.use(logger('dev'));
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', index);
-app.use('/scripts', scripts);
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-  var err = new Error('Not Found');
-  err.status = 404;
-  next(err);
+app.get('/', function(req, res, next) {
+  res.sendFile(__dirname + '/index.html');
 });
 
-// error handler
-app.use(function(err, req, res, next) {
-  // set locals, only providing error in development
-  res.locals.message = err.message;
-  res.locals.error = req.app.get('env') === 'development' ? err : {};
+io.on('connection', function(client) {
+  client.on('join', function(data) {
+    console.log(data);
 
-  // render the error page
-  res.status(err.status || 500);
-  res.render('error');
+    /*
+    setTimeout(function () {
+      var receivedData = "";
+      var serialport = new SerialPort(spPortName, {
+           baudrate: 9600
+      });
+
+      serialport.on('open', function(){
+        console.log("serialport open -- press reset on the Arduino");
+      });
+
+      var buffer = "";
+      serialport.on('data', function(data){
+          var match = /\r|\n/.exec(data);
+          if (match) {
+              buffer += data;
+              sendData = buffer.replace(/[\r\n]/g, "");
+              if(sendData != "") io.emit('update', {sendData});
+              buffer = "";
+          } else buffer += data;
+      });
+    }, 50);
+    */
+  });
+
 });
 
-module.exports = app;
+io.on('error', function(err) {
+  console.log(err);
+});
+
+server.listen(port, function() {
+  console.log("ABSP Server running on port " + port);
+});
+
+
+

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Active Bed Sore Preventor</title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+
+  </head>
+  <body>
+    <div id="heatmapContainerWrapper">
+      <div id="heatmapContainer" style="position: relative;">
+        
+      </div>
+    </div>
+
+  </body>
+  <script src="/javascripts/jquery.min.js"></script>
+  <script src="/javascripts/socketio.js"></script>
+  <script src="/javascripts/heatmap.js"></script>
+  <script>
+    var socket = io.connect();
+    socket.emit('join', 'Client connected');
+    
+    
+    
+    window.onload = function() {
+      // create a heatmap instance
+      var heatmap = h337.create({
+        container: document.getElementById('heatmapContainer'),
+        maxOpacity: .6,
+        radius: 30,
+        blur: .95,
+      });
+      var heatmapContainer = document.getElementById('heatmapContainerWrapper');
+
+      heatmapContainer.onclick = function(e) {
+        var x = e.layerX;
+        var y = e.layerY;
+        heatmap.addData({ x: x, y: y, value: 1 });
+      };
+
+    };
+    
+    
+  </script>
+
+</html>
