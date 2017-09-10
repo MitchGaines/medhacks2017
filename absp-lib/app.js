@@ -5,28 +5,25 @@ var server = require('http').createServer(app);
 var io = require('socket.io')(server);
 var SerialPort = require("serialport");
 // spPortName may need to be configured until we resolve automatic detection!
-//var spPortName = "/dev/cu.usbmodem1421";
+var spPortName = "COM3";
 var port = 3000;
 
-app.use(express.static('public'))
+app.use(express.static('public'));
 
 app.get('/', function(req, res, next) {
   res.sendFile(__dirname + '/index.html');
 });
 
+
 io.on('connection', function(client) {
   client.on('join', function(data) {
     console.log(data);
 
-    /*
+    
     setTimeout(function () {
       var receivedData = "";
       var serialport = new SerialPort(spPortName, {
            baudrate: 9600
-      });
-
-      serialport.on('open', function(){
-        console.log("serialport open -- press reset on the Arduino");
       });
 
       var buffer = "";
@@ -40,7 +37,6 @@ io.on('connection', function(client) {
           } else buffer += data;
       });
     }, 50);
-    */5
   });
 
 });

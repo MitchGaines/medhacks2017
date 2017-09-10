@@ -49,6 +49,46 @@ QueueArray <int> pressure_queue;
  * |________|           |________|
  */
 
+void printPM(){
+  Serial.write("LUL: " + pressure_matrix[0][0]);
+  delay(50);
+  Serial.write("LUM: " + pressure_matrix[0][1]);  
+  delay(50);
+  Serial.write("LUR: " + pressure_matrix[0][2]);
+  delay(50);
+  Serial.write("RUL: " + pressure_matrix[0][3]);
+  delay(50);
+  Serial.write("RUM: " + pressure_matrix[0][4]); 
+  delay(50); 
+  Serial.write("RUR: " + pressure_matrix[0][5]);
+  delay(50);
+
+  Serial.write("LML: " + pressure_matrix[1][0]);
+  delay(50);
+  Serial.write("LMM: " + pressure_matrix[1][1]);
+  delay(50);  
+  Serial.write("LMR: " + pressure_matrix[1][2]);
+  delay(50);
+  Serial.write("RML: " + pressure_matrix[1][3]);
+  delay(50);
+  Serial.write("RMM: " + pressure_matrix[1][4]);
+  delay(50);  
+  Serial.write("RMR: " + pressure_matrix[1][5]);
+  delay(50);
+
+  Serial.write("LLL: " + pressure_matrix[2][0]);
+  delay(50);
+  Serial.write("LLM: " + pressure_matrix[2][1]);
+  delay(50);  
+  Serial.write("LLR: " + pressure_matrix[2][2]);
+  delay(50);
+  Serial.write("RLL: " + pressure_matrix[2][3]);
+  delay(50);
+  Serial.write("RLM: " + pressure_matrix[2][4]);  
+  delay(50);
+  Serial.write("RLR: " + pressure_matrix[2][5]);
+}
+
 void setup() {
   Serial.begin(9600);
   
@@ -90,8 +130,7 @@ void setup() {
 void loop() {
   readPressurePins();
   setPressureMatrix();
-
-  
+  printPM();
   delay(1000); //loops once every second
 }
 
@@ -102,134 +141,116 @@ void setPressureMatrix(){
       //first row
       if(pressure_queue.peek() == leg_lul) {
         pressure_queue.pop();
-        if(pressure_matrix[0][0]++ >= reation_time){
+        if(pressure_matrix[0][0]++ >= reaction_time){
             inflate(inf_ul);
         }
-        Serial.write("LUL: " + pressure_matrix[0][0]);
       }
       if(pressure_queue.peek() == leg_lum) {
         pressure_queue.pop();
-        if(pressure_matrix[0][1]++ >= reation_time){
+        if(pressure_matrix[0][1]++ >= reaction_time){
             inflate(inf_ul);
         } 
-        Serial.write("LUM: " + pressure_matrix[0][1]);
       }
       if(pressure_queue.peek() == leg_lur) {
         pressure_queue.pop();
-        if(pressure_matrix[0][2]++ >= reation_time){
+        if(pressure_matrix[0][2]++ >= reaction_time){
             inflate(inf_ul);
         }  
-        Serial.write("LUR: " + pressure_matrix[0][2]);
       }
       if(pressure_queue.peek() == leg_rul) {
         pressure_queue.pop();
-        if(pressure_matrix[0][3]++ >= reation_time){
+        if(pressure_matrix[0][3]++ >= reaction_time){
             inflate(inf_ur);
         }  
-        Serial.write("RUL: " + pressure_matrix[0][3]);
       }
       if(pressure_queue.peek() == leg_rum) {
         pressure_queue.pop();
-        if(pressure_matrix[0][4]++ >= reation_time){
+        if(pressure_matrix[0][4]++ >= reaction_time){
             inflate(inf_ur);
         }    
-        Serial.write("RUM: " + pressure_matrix[0][4]);
       }
       if(pressure_queue.peek() == leg_rur) {
         pressure_queue.pop();
-        if(pressure_matrix[0][5]++ >= reation_time){
+        if(pressure_matrix[0][5]++ >= reaction_time){
             inflate(inf_ur);
         }  
-        Serial.write("RUR: " + pressure_matrix[0][5]);
       }
 
 
       //second row
       if(pressure_queue.peek() == leg_lml) {
         pressure_queue.pop();
-        if(pressure_matrix[1][0]++ >= reation_time){
+        if(pressure_matrix[1][0]++ >= reaction_time){
            inflate(inf_ll);
         }   
-        Serial.write("LML: " + pressure_matrix[1][0]);
       }
       if(pressure_queue.peek() == leg_lmm) {
         pressure_queue.pop();
-        if(pressure_matrix[1][1]++ >= reation_time){
+        if(pressure_matrix[1][1]++ >= reaction_time){
            inflate(inf_ll);
         }   
-        Serial.write("LMM: " + pressure_matrix[1][1]);
       }
       if(pressure_queue.peek() == leg_lmr) {
         pressure_queue.pop();
-        if(pressure_matrix[1][2]++ >= reation_time){
+        if(pressure_matrix[1][2]++ >= reaction_time){
            inflate(inf_ll);
         }   
-        Serial.write("LMR: " + pressure_matrix[1][2]);
       }
       if(pressure_queue.peek() == leg_rml) {
         pressure_queue.pop();
-        if(pressure_matrix[1][3]++ >= reation_time){
+        if(pressure_matrix[1][3]++ >= reaction_time){
            inflate(inf_lr);
         }    
-        Serial.write("RML: " + pressure_matrix[1][3]);
       }
       if(pressure_queue.peek() == leg_rmm) {
         pressure_queue.pop();
-        if(pressure_matrix[1][4]++ >= reation_time){
+        if(pressure_matrix[1][4]++ >= reaction_time){
            inflate(inf_lr);
         }     
-        Serial.write("RMM: " + pressure_matrix[1][4]);
       }
       if(pressure_queue.peek() == leg_rmr) {
         pressure_queue.pop();
-        if(pressure_matrix[1][5]++ >= reation_time){
+        if(pressure_matrix[1][5]++ >= reaction_time){
            inflate(inf_lr);
         }     
-        Serial.write("RMR: " + pressure_matrix[1][5]);
       }
 
       //third row
       if(pressure_queue.peek() == leg_lll) {
         pressure_queue.pop();
-        if(pressure_matrix[2][0]++ >= reation_time){
+        if(pressure_matrix[2][0]++ >= reaction_time){
            inflate(inf_ll);
         }
-        Serial.write("LLL: " + pressure_matrix[2][0]);
       }
       if(pressure_queue.peek() == leg_llm) {
         pressure_queue.pop();
-        if(pressure_matrix[2][1]++ >= reation_time){
+        if(pressure_matrix[2][1]++ >= reaction_time){
            inflate(inf_ll);
         }  
-        Serial.write("LLM: " + pressure_matrix[2][1]);
       }
       if(pressure_queue.peek() == leg_llr) {
         pressure_queue.pop();
-        if(pressure_matrix[2][2]++ >= reation_time){
+        if(pressure_matrix[2][2]++ >= reaction_time){
            inflate(inf_ll);
         }  
-        Serial.write("LLR: " + pressure_matrix[2][2]);
       }
       if(pressure_queue.peek() == leg_rll) {
         pressure_queue.pop();
-        if(pressure_matrix[2][3]++ >= reation_time){
+        if(pressure_matrix[2][3]++ >= reaction_time){
            inflate(inf_lr);
         }    
-        Serial.write("RLL: " + pressure_matrix[2][3]);
       }
       if(pressure_queue.peek() == leg_rlm) {
         pressure_queue.pop();
-        if(pressure_matrix[2][4]++ >= reation_time){
+        if(pressure_matrix[2][4]++ >= reaction_time){
            inflate(inf_lr);
         }   
-        Serial.write("RLM: " + pressure_matrix[2][4]);
       }
       if(pressure_queue.peek() == leg_rlr) {
         pressure_queue.pop();
-        if(pressure_matrix[2][5]++ >= reation_time){
+        if(pressure_matrix[2][5]++ >= reaction_time){
            inflate(inf_lr);
         }     
-        Serial.write("RLR: " + pressure_matrix[2][5]);
       }
   }  
 }
@@ -293,6 +314,8 @@ void inflate(int port){
     pressure_matrix[0][5] = 0;
    }
 }
+
+
 
 
 
