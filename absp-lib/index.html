@@ -18,6 +18,9 @@
   <script src="/javascripts/heatmap.js"></script>
   <script>
     var socket = io.connect();
+    socket.emit('join', 'Client connected');
+    
+    
     var heatmap = h337.create({
       container: document.getElementById('heatmapContainer'),
       maxOpacity: .6,
@@ -25,86 +28,6 @@
       blur: .95,
     });
 
-    var leg_lll_dp = {x: 785, y: 565, value: 0};
-    var leg_llm_dp = {x: 820, y: 576, value: 0};
-    var leg_llr_dp = {x: 860, y: 580, value: 0};
-    var leg_lml_dp = {x: 785, y: 706, value: 0};
-    var leg_lmm_dp = {x: 820, y: 706, value: 0};
-    var leg_lmr_dp = {x: 860, y: 710, value: 0};
-    var leg_lul_dp = {x: 785, y: 825, value: 0};
-    var leg_lum_dp = {x: 820, y: 836, value: 0};
-    var leg_lur_dp = {x: 860, y: 840, value: 0};
-
-    var leg_rll_dp = {x: 880, y: 580, value: 0};
-    var leg_rlm_dp = {x: 920, y: 576, value: 0};
-    var leg_rlr_dp = {x: 955, y: 565, value: 0};
-    var leg_rml_dp = {x: 880, y: 710, value: 0};
-    var leg_rmm_dp = {x: 920, y: 706, value: 0};
-    var leg_rmr_dp = {x: 955, y: 706, value: 0};
-    var leg_rul_dp = {x: 880, y: 840, value: 0};
-    var leg_rum_dp = {x: 920, y: 836, value: 0};
-    var leg_rur_dp = {x: 955, y: 825, value: 0};
-
-    var data = {
-      max: 10,
-      min: 0,
-      data: [ leg_lll_dp, leg_llm_dp, leg_llr_dp, leg_lml_dp, leg_lmm_dp, leg_lmr_dp, leg_lul_dp, leg_lum_dp, leg_lur_dp,leg_rll_dp, leg_rlm_dp, leg_rlr_dp, leg_rml_dp, leg_rmm_dp, leg_rmr_dp, leg_rul_dp, leg_rum_dp, leg_rur_dp
-      ]
-    };
-    heatmap.setData(data);
-    
-    socket.emit('join', 'Client connected');
-   
-    
-    socket.on('update', function(data) {
-      if(data.contains("LLL")){
-        leg_lll_dp.value = data.match(/\d/g).join("");
-      } else if(data.contains("LLM")) {
-        leg_llm_dp.value = data.match(/\d/g).join("");
-      } else if(data.contains("LLR")) {
-        leg_llr_dp.value = data.match(/\d/g).join("");
-      } else if(data.contains("LML")) {
-        leg_lml_dp.value = data.match(/\d/g).join("");
-      } else if(data.contains("LMM")) {
-        leg_lmm_dp.value = data.match(/\d/g).join("");
-      } else if(data.contains("LMR")) {
-        leg_lmr_dp.value = data.match(/\d/g).join("");
-      } else if(data.contains("LUL")) {
-        leg_lul_dp.value = data.match(/\d/g).join("");
-      } else if(data.contains("LUM")) {
-        leg_lum_dp.value = data.match(/\d/g).join("");
-      } else if(data.contains("LUR")) {
-        leg_lur_dp.value = data.match(/\d/g).join("");
-      } else if(data.contains("RLL")) {
-        leg_rll_dp.value = data.match(/\d/g).join("");
-      } else if(data.contains("RLM")) {
-        leg_rlm_dp.value = data.match(/\d/g).join("");
-      } else if(data.contains("RLR")) {
-        leg_rlr_dp.value = data.match(/\d/g).join("");
-      } else if(data.contains("RML")) {
-        leg_rml_dp.value = data.match(/\d/g).join("");
-      } else if(data.contains("RMM")) {
-        leg_rmm_dp.value = data.match(/\d/g).join("");
-      } else if(data.contains("RMR")) {
-        leg_rmr_dp.value = data.match(/\d/g).join("");
-      } else if(data.contains("RUL")) {
-        leg_rul_dp.value = data.match(/\d/g).join("");
-      } else if(data.contains("RUM")) {
-        leg_rum_dp.value = data.match(/\d/g).join("");
-      } else if(data.contains("RUR")) {
-        leg_rur_dp.value = data.match(/\d/g).join("");
-      }
-      heatmap.clearData();
-      var data = {
-        max: 10,
-        min: 0,
-        data: [ leg_lll_dp, leg_llm_dp, leg_llr_dp, leg_lml_dp, leg_lmm_dp, leg_lmr_dp, leg_lul_dp, leg_lum_dp, leg_lur_dp,leg_rll_dp, leg_rlm_dp, leg_rlr_dp, leg_rml_dp, leg_rmm_dp, leg_rmr_dp, leg_rul_dp, leg_rum_dp, leg_rur_dp
-        ]
-      };
-      heatmap.setData(data);
-    });
-    
-    
     window.onload = function() {
       // create a heatmap instance
       var heatmap = h337.create({
@@ -113,41 +36,19 @@
         radius: 40,
         blur: .95,
       });
+
       
-      var leg_lll_dp = {x: 785, y: 565, value: 0};
-      var leg_llm_dp = {x: 820, y: 576, value: 0};
-      var leg_llr_dp = {x: 860, y: 580, value: 0};
-      var leg_lml_dp = {x: 785, y: 706, value: 0};
-      var leg_lmm_dp = {x: 820, y: 706, value: 0};
-      var leg_lmr_dp = {x: 860, y: 710, value: 0};
-      var leg_lul_dp = {x: 785, y: 825, value: 0};
-      var leg_lum_dp = {x: 820, y: 836, value: 0};
-      var leg_lur_dp = {x: 860, y: 840, value: 0};
-      
-      var leg_rll_dp = {x: 880, y: 580, value: 0};
-      var leg_rlm_dp = {x: 920, y: 576, value: 0};
-      var leg_rlr_dp = {x: 955, y: 565, value: 0};
-      var leg_rml_dp = {x: 880, y: 710, value: 0};
-      var leg_rmm_dp = {x: 920, y: 706, value: 0};
-      var leg_rmr_dp = {x: 955, y: 706, value: 0};
-      var leg_rul_dp = {x: 880, y: 840, value: 0};
-      var leg_rum_dp = {x: 920, y: 836, value: 0};
-      var leg_rur_dp = {x: 955, y: 825, value: 0};
-      
-      var data = {
-        max: 10,
-        min: 0,
-        data: [ leg_lll_dp, leg_llm_dp, leg_llr_dp, leg_lml_dp, leg_lmm_dp, leg_lmr_dp, leg_lul_dp, leg_lum_dp, leg_lur_dp,leg_rll_dp, leg_rlm_dp, leg_rlr_dp, leg_rml_dp, leg_rmm_dp, leg_rmr_dp, leg_rul_dp, leg_rum_dp, leg_rur_dp
-        ]
-      };
-      heatmap.setData(data);
-      /*
       heatmapContainer.onclick = function(e) {
         var x = e.layerX;
         var y = e.layerY;
         heatmap.addData({ x: x, y: y, value: 1 });
+        var coordinates = {
+          x: x,
+          y: y
+        }
+        socket.emit('coords', coordinates);
       };
-      */
+      
 
     };
     

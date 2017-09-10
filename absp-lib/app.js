@@ -3,9 +3,8 @@ var express = require('express');
 var app = express();
 var server = require('http').createServer(app);
 var io = require('socket.io')(server);
-var SerialPort = require("serialport");
-// spPortName may need to be configured until we resolve automatic detection!
-var spPortName = "COM3";
+var five = require("johnny-five");
+var board = new five.Board();
 var port = 3000;
 
 app.use(express.static('public'));
@@ -15,31 +14,53 @@ app.get('/', function(req, res, next) {
 });
 
 
-io.on('connection', function(client) {
-  client.on('join', function(data) {
-    console.log(data);
+board.on('ready', function() {
+  board.digitalWrite(22, 0);
+  board.digitalWrite(23, 0);
+  board.digitalWrite(24, 0);
+  board.digitalWrite(25, 0);
+  io.on('connection', function(client) {
+  
+    client.on('join', function(data) {
+      console.log(data);
+    });
 
+    client.on('coords', function(data) {
+      console.log(data);
+      if(data.x < 860 && data.x > 780 && data.y > 550 && data.y < 600){
+        //inflate upper left
+        board.digitalWrite(22, 1);
+        setTimeout(function() {
+          board.digitalWrite(22, 0);
+        }, 2000);
+      } else if(data.x < 860 && data.x > 780){
+        //inflate lower left
+        board.digitalWrite(23, 1);
+        setTimeout(function() {
+          board.digitalWrite(23, 0);
+        }, 2000);
+      } else if(data.x < 980 && data.x > 880 &&  data.y > 550 && data.y < 600){
+        //inflate upper right
+        board.digitalWrite(24, 1);
+        setTimeout(function() {
+          board.digitalWrite(24, 0);
+        }, 2000);
+      } else if(data.x < 980 && data.x > 880){
+        //inflate lower right
+        board.digitalWrite(25, 1);
+        setTimeout(function() {
+          board.digitalWrite(25, 0);
+        }, 2000);
+      }
+      
+    });
     
-    setTimeout(function () {
-      var receivedData = "";
-      var serialport = new SerialPort(spPortName, {
-           baudrate: 9600
-      });
-
-      var buffer = "";
-      serialport.on('data', function(data){
-          var match = /\r|\n/.exec(data);
-          if (match) {
-              buffer += data;
-              sendData = buffer.replace(/[\r\n]/g, "");
-              if(sendData != "") io.emit('update', {sendData});
-              buffer = "";
-          } else buffer += data;
-      });
-    }, 50);
   });
-
 });
+
+
+
+
 
 io.on('error', function(err) {
   console.log(err);
